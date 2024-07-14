@@ -40,9 +40,11 @@ export const PatientForm: FunctionComponent = () => {
       const request = { ...values };
 
       const response = await createUser(request);
-
+      if (response) {
+        router.push(`patients/${response.$id}/register`);
+      }
+      setLoading(false);
       // if (!response) return console.log("error wtf?");
-      // router.push(`patients/${response.$id}/register`);
     } catch (error) {
       console.log(error);
     }
