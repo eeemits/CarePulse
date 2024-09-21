@@ -180,6 +180,9 @@
   .text-12-semibold {
     @apply text-[12px] leading-[16px] font-semibold;
   }
+  .text-10-semibold {
+    @apply text-[10px] leading-[14px] font-semibold;
+  }
 
   /* =====  SHADCN OVERRIDES */
   .shad-primary-btn {
