@@ -1,0 +1,37 @@
+export const ENGLISH = {
+  _LABEL_INSURANCE_PROVIDER: "Insurance Provider",
+  ADDRESS: "Address",
+  DOB: "Date of birth",
+  EMAIL_ADDRESS: "Email address",
+  LABEL_FULL_NAME: "Full Name",
+  GENDER: "Gender",
+  LABEL_EMAIL: "Email",
+  LABEL_EMERGENCY_CONTACT: "Emergency contact name",
+  LABEL_MEDICAL_INFORMATION: "Medical Information",
+  LABEL_PERSONAL_INFORMATION: "Personal Information",
+  LABEL_PHONE_NUMBER: "Phone number",
+  LABEL_PRIMARY_CARE_PHYSICIAN: "Primary care physician",
+  OCCUPATION: "Occupation",
+  LABEL_ALLERGIES_IF_ANY: "Allergies (if any)",
+  LABEL_CURRENT_MEDICATION: "Current medications",
+  LABEL_FAMILY_MEDICAL_HISTORY: "Family medical history (if relevant)",
+  LABEL_PAST_MEDICAL_HISTORY: "Past medical history",
+
+  PLACE_HOLDER: {
+    PLACE_HOLDER_ADDRESS: "eg: 43, Barton Terrace, Flat 25 11 Mayert Grange",
+    PLACE_HOLDER_OCCUPATION: "Software Engineer",
+    PLACE_HOLDER_EMERGENCY_CONTACT: "Guardian's name",
+    PLACE_HOLDER_PHONE_NUMBER: "ex: +1(693)831-81318",
+    PLACE_HOLDER_INSURANCE_PROVIDER: "Blue Cross",
+    PLACE_HOLDER_ALLERGIES: "ex: Peanuts, Penicillin, Pollen",
+    PLACE_HOLDER_CURRENT_MEDICATION: "ex: Ibuprofen 200mg, Levothyroxine 50mcg",
+    PLACE_HOLDER_FAMILY_MEDICAL_HISTORY: "ex: Mother had breast cancer",
+    PLACE_HOLDER_PAST_MEDICAL_HISTORY: "ex: Asthma diagnosis in childhood",
+    PLACE_HOLDER_GENDER: "ex: Female",
+    PLACE_HOLDER_EMAIL: "JohnDoe@Proton.com",
+  },
+
+  LABEL_BUTTON_ACTION: {
+    LABEL_SUBMIT_CONTINUE: "Submit and Continue",
+  },
+};
