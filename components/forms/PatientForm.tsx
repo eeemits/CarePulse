@@ -5,14 +5,10 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { CustomFormField } from "../CustomFormField";
 import { SubmitButton } from "../SubmitButton";
-import { useState, type FunctionComponent } from "react";
+import { useState } from "react";
 import { userFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib";
-import { ENGLISH } from "@/constants";
-
-const { LABEL_FULL_NAME, LABEL_PHONE_NUMBER, PLACE_HOLDER } = ENGLISH;
-const { PLACE_HOLDER_PHONE_NUMBER } = PLACE_HOLDER;
 
 export enum FormFieldType {
   INPUT = "input",
@@ -21,10 +17,10 @@ export enum FormFieldType {
   TEXT_AREA = "textarea",
   DATE_PICKER = "datepicker",
   SELECT = "select",
-  SKELETON = "skeleton"
+  SKELETON = "skeleton",
 }
 
-export const PatientForm: FunctionComponent = () => {
+export const PatientForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean | undefined>(false);
 
@@ -33,20 +29,20 @@ export const PatientForm: FunctionComponent = () => {
     defaultValues: {
       name: "",
       phone: "",
-      email: ""
-    }
+      email: "",
+    },
   });
 
   const onSubmit = async (values: z.infer<typeof userFormValidation>) => {
     try {
-      const request = { ...values };
       setLoading(true);
+
+      const request = { ...values };
+
       const response = await createUser(request);
 
-      if (response) {
-        router.push(`patients/${response.$id}/register`);
-      }
-      setLoading(false);
+      // if (!response) return console.log("error wtf?");
+      // router.push(`patients/${response.$id}/register`);
     } catch (error) {
       console.log(error);
     }
@@ -54,10 +50,7 @@ export const PatientForm: FunctionComponent = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 flex-1"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
           <h1 className="header">Hi There! 🥰</h1>
           <p className="text-dark-700">Schedule your first appointment</p>
@@ -67,7 +60,7 @@ export const PatientForm: FunctionComponent = () => {
           fieldType={FormFieldType.INPUT}
           name="name"
           placeholder="John Doe"
-          label={LABEL_FULL_NAME}
+          label="Full name"
           icon="/assets/icons/user.svg"
         />
         <CustomFormField
@@ -82,8 +75,8 @@ export const PatientForm: FunctionComponent = () => {
           control={form.control}
           fieldType={FormFieldType.PHONE_INPUT}
           name="phone"
-          placeholder={PLACE_HOLDER_PHONE_NUMBER}
-          label={LABEL_PHONE_NUMBER}
+          placeholder="(555) 1234567"
+          label="Phone number"
         />
         <SubmitButton isLoading={loading}>Get Started</SubmitButton>
       </form>
