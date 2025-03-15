@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { DATE_STANDARD_FORMAT } from "@/constants";
 import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
 
 export interface CustomFormFieldProps {
   children?: ReactNode;
@@ -31,21 +32,61 @@ export interface CustomFormFieldProps {
 }
 
 const FieldItemComponent = ({ field, props }: { field: any; props: CustomFormFieldProps }) => {
-  const { fieldType, icon: iconSrc, placeholder, showTimeSelect, dateFormat, skeletonItem, disabled, maxLength, maxDate, minDate } = props;
+  const {
+    fieldType,
+    icon: iconSrc,
+    placeholder,
+    showTimeSelect,
+    dateFormat,
+    skeletonItem,
+    disabled,
+    maxLength,
+    maxDate,
+    minDate,
+    name
+  } = props;
 
   const { onChange, value } = field;
 
   let children: ReactNode = <Fragment />;
   switch (fieldType) {
     case FormFieldType.CHECKBOX:
-      children = <div></div>;
+      children = (
+        <FormControl>
+          <div className="flex item-center gap-4">
+            <Checkbox
+              id={name}
+              onCheckedChange={onChange}
+              checked={value}
+            />
+            <label
+              htmlFor={name}
+              className="checkbox-label"
+            >
+              {props.label}
+            </label>
+          </div>
+        </FormControl>
+      );
       break;
     case FormFieldType.INPUT:
       children = (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
-          {iconSrc !== undefined ? <Image src={iconSrc} height={24} width={24} alt={"icon"} className="ml-2" /> : null}
+          {iconSrc !== undefined ? (
+            <Image
+              src={iconSrc}
+              height={24}
+              width={24}
+              alt={"icon"}
+              className="ml-2"
+            />
+          ) : null}
           <FormControl>
-            <Input placeholder={placeholder} {...field} className="shad-input border-0" />
+            <Input
+              placeholder={placeholder}
+              {...field}
+              className="shad-input border-0"
+            />
           </FormControl>
         </div>
       );
@@ -68,7 +109,10 @@ const FieldItemComponent = ({ field, props }: { field: any; props: CustomFormFie
     case FormFieldType.SELECT:
       return (
         <FormControl>
-          <Select onValueChange={onChange} value={value}>
+          <Select
+            onValueChange={onChange}
+            value={value}
+          >
             <FormControl>
               <SelectTrigger className="shad-select-trigger">
                 <SelectValue placeholder={placeholder} />
@@ -83,7 +127,13 @@ const FieldItemComponent = ({ field, props }: { field: any; props: CustomFormFie
     case FormFieldType.DATE_PICKER:
       return (
         <div className="flex rounded-md-border border-dark-500 bg-dark-400">
-          <Image src="/assets/icons/calendar.svg" width={24} height={24} alt="calendar" className="ml-2" />
+          <Image
+            src="/assets/icons/calendar.svg"
+            width={24}
+            height={24}
+            alt="calendar"
+            className="ml-2"
+          />
           <FormControl>
             <DatePicker
               selected={value}
@@ -103,7 +153,13 @@ const FieldItemComponent = ({ field, props }: { field: any; props: CustomFormFie
       return (
         <FormControl>
           <div className="flex-1 flex flex-col">
-            <Textarea {...field} placeholder={placeholder} className="shad-textArea" disabled={disabled} maxLength={maxLength} />
+            <Textarea
+              {...field}
+              placeholder={placeholder}
+              className="shad-textArea"
+              disabled={disabled}
+              maxLength={maxLength}
+            />
           </div>
         </FormControl>
       );
@@ -120,7 +176,10 @@ export const CustomFormField: FunctionComponent<CustomFormFieldProps> = (props: 
       render={({ field }) => (
         <FormItem className="flex-1">
           {fieldType !== FormFieldType.CHECKBOX && label !== undefined ? <FormLabel>{label}</FormLabel> : null}
-          <FieldItemComponent field={field} props={props} />
+          <FieldItemComponent
+            field={field}
+            props={props}
+          />
           <div className="flex-row justify-between items-center">
             <FormMessage className="shad-error" />
             {props.maxLength !== undefined && (

@@ -5,9 +5,10 @@ import { CustomFormField, type CustomFormFieldProps } from "../CustomFormField";
 export interface FormGroupProps {
   title: string;
   columns: CustomFormFieldProps[];
+  isRowLayout?: boolean;
 }
 
-export const FormGroup: FunctionComponent<FormGroupProps & { children?: ReactNode }> = ({ title, children, columns }) => {
+export const FormGroup: FunctionComponent<FormGroupProps & { children?: ReactNode }> = ({ title, children, columns, isRowLayout }) => {
   children = children ? children : <div></div>;
 
   return (
@@ -18,7 +19,7 @@ export const FormGroup: FunctionComponent<FormGroupProps & { children?: ReactNod
         </div>
       </section>
       {children && <Fragment>{children}</Fragment>}
-      <div className="flex-1 flex flex-col gap-4 sm:grid sm:grid-cols-2">
+      <div className={`flex-1 flex flex-col gap-4 ${isRowLayout ? "flex-row" : "sm:grid sm:grid-cols-2"}`}>
         {columns.map((column, index) => (
           <CustomFormField
             key={index} // Adding the key prop
