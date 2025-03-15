@@ -8,6 +8,8 @@ export const ENGLISH = {
   LABEL_EMAIL: "Email",
   LABEL_EMERGENCY_CONTACT: "Emergency contact name",
   LABEL_MEDICAL_INFORMATION: "Medical Information",
+  LABEL_IDENTIFICATION_INFORMATION: "Identification and Verification",
+  LABEL_CONSENT_PRIVACY_INFORMATION: "Consent And Privacy",
   LABEL_PERSONAL_INFORMATION: "Personal Information",
   LABEL_PHONE_NUMBER: "Phone number",
   LABEL_PRIMARY_CARE_PHYSICIAN: "Primary care physician",
@@ -16,12 +18,15 @@ export const ENGLISH = {
   LABEL_CURRENT_MEDICATION: "Current medications",
   LABEL_FAMILY_MEDICAL_HISTORY: "Family medical history (if relevant)",
   LABEL_PAST_MEDICAL_HISTORY: "Past medical history",
+  LABEL_IDENTIFICATION_TYPE: "Identification  Type",
+  LABEL_EMERGENCY_PHONE: "Emergency contact number",
 
   PLACE_HOLDER: {
     PLACE_HOLDER_ADDRESS: "eg: 43, Barton Terrace, Flat 25 11 Mayert Grange",
     PLACE_HOLDER_OCCUPATION: "Software Engineer",
     PLACE_HOLDER_EMERGENCY_CONTACT: "Guardian's name",
     PLACE_HOLDER_PHONE_NUMBER: "ex: +1(693)831-81318",
+    PLACE_HOLDER_IDENTIFICATION_NUMBER: "0031081318",
     PLACE_HOLDER_INSURANCE_PROVIDER: "Blue Cross",
     PLACE_HOLDER_ALLERGIES: "ex: Peanuts, Penicillin, Pollen",
     PLACE_HOLDER_CURRENT_MEDICATION: "ex: Ibuprofen 200mg, Levothyroxine 50mcg",
@@ -29,9 +34,10 @@ export const ENGLISH = {
     PLACE_HOLDER_PAST_MEDICAL_HISTORY: "ex: Asthma diagnosis in childhood",
     PLACE_HOLDER_GENDER: "ex: Female",
     PLACE_HOLDER_EMAIL: "JohnDoe@Proton.com",
+    PLACE_HOLDER_IDENTIFICATION_TYPE: "Select an identification type"
   },
 
   LABEL_BUTTON_ACTION: {
-    LABEL_SUBMIT_CONTINUE: "Submit and Continue",
-  },
+    LABEL_SUBMIT_CONTINUE: "Submit and Continue"
+  }
 };
