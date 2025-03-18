@@ -20,6 +20,8 @@ export const ENGLISH = {
   LABEL_PAST_MEDICAL_HISTORY: "Past medical history",
   LABEL_IDENTIFICATION_TYPE: "Identification  Type",
   LABEL_EMERGENCY_PHONE: "Emergency contact number",
+  LABEL_REASON_OF_APPOINTMENT: "Reason of Appointment",
+  LABEL_DOCTOR: "Doctor",
 
   PLACE_HOLDER: {
     PLACE_HOLDER_ADDRESS: "eg: 43, Barton Terrace, Flat 25 11 Mayert Grange",
@@ -34,7 +36,9 @@ export const ENGLISH = {
     PLACE_HOLDER_PAST_MEDICAL_HISTORY: "ex: Asthma diagnosis in childhood",
     PLACE_HOLDER_GENDER: "ex: Female",
     PLACE_HOLDER_EMAIL: "JohnDoe@Proton.com",
-    PLACE_HOLDER_IDENTIFICATION_TYPE: "Select an identification type"
+    PLACE_HOLDER_IDENTIFICATION_TYPE: "Select an identification type",
+    PLACE_HOLDER_REASON_OF_APPOINTMENT: "ex: Annual monthly check-up",
+    PLACE_HOLDER_CHOOSE_DOCTOR: "Select a Doctor"
   },
 
   LABEL_BUTTON_ACTION: {
