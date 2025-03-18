@@ -35,8 +35,6 @@ export const getUser = async (userId: string) => {
 
 export const registerPatient = async ({ identificationDocument, ...patients }: RegisterUserParams) => {
   try {
-    console.log("identificationDocument", identificationDocument);
-
     let file;
     if (identificationDocument) {
       const inputFile = InputFile.fromBuffer(
@@ -53,6 +51,15 @@ export const registerPatient = async ({ identificationDocument, ...patients }: R
     });
 
     return parseStringify(newPatient);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPatients = async (userId: string) => {
+  try {
+    const patients = await db.listDocuments(DATABASE_ID!, PATIENT_COLLECTION_ID!, [Query.equal("userId", userId)]);
+    return parseStringify(patients);
   } catch (error) {
     console.log(error);
   }
