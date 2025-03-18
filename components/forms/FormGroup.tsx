@@ -4,11 +4,18 @@ import { CustomFormField, type CustomFormFieldProps } from "../CustomFormField";
 
 export interface FormGroupProps {
   title: string;
+  subLabel?: string;
   columns: CustomFormFieldProps[];
   isRowLayout?: boolean;
 }
 
-export const FormGroup: FunctionComponent<FormGroupProps & { children?: ReactNode }> = ({ title, children, columns, isRowLayout }) => {
+export const FormGroup: FunctionComponent<FormGroupProps & { children?: ReactNode }> = ({
+  title,
+  subLabel,
+  children,
+  columns,
+  isRowLayout
+}) => {
   children = children ? children : <div></div>;
 
   return (
@@ -16,6 +23,7 @@ export const FormGroup: FunctionComponent<FormGroupProps & { children?: ReactNod
       <section className=" space-y-4">
         <div className="mb-9 space-y-1">
           <h2 className="sub-header">{title}</h2>
+          {subLabel && <p className="sub-label">{subLabel}</p>}
         </div>
       </section>
       {children && <Fragment>{children}</Fragment>}
