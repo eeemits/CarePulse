@@ -11,6 +11,16 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
 
     return parseStringify(newAppointment);
   } catch (error) {
-    console.log("error", error);
+    throw error;
+  }
+};
+
+export const getAppointment = async (id: string) => {
+  try {
+    const response = await db.getDocument(DATABASE_ID!, APPOINTMENT_COLLECTION_ID!, id);
+
+    return parseStringify(response) as RestResponse<CreateAppointmentParams>;
+  } catch (error) {
+    throw error;
   }
 };

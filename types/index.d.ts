@@ -46,6 +46,7 @@ declare type CreateAppointmentParams = {
   schedule: Date;
   status: Status;
   userId: string;
+  cancellationReason: string | null;
 };
 
 declare type UpdateAppointmentParams = {
@@ -54,3 +55,8 @@ declare type UpdateAppointmentParams = {
   type: string;
   userId: string;
 };
+
+declare interface RestResponse<T> {
+  total: number;
+  documents: T[];
+}
