@@ -12,10 +12,6 @@ const SuccessPage = async ({ params: { userId }, searchParams }: SearchParamProp
 
   const doctor = Doctors.find((doc) => doc.name === response.documents[0].primaryPhysician);
 
-  console.log("response", response);
-
-  console.log("doctor", doctor);
-
   return (
     <div className="flex h-screen max-h-screen px-[5%]">
       <div className="success-img">
