@@ -60,3 +60,11 @@ declare interface RestResponse<T> {
   total: number;
   documents: T[];
 }
+
+declare interface StatsProps {
+  appointments: number;
+  cancelled: number;
+  pending: number;
+  totalCount: number;
+  documents: Appointment[];
+}
