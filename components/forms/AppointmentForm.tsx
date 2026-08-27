@@ -6,12 +6,13 @@ import { Form } from "@/components/ui/form";
 import { CustomFormField } from "../CustomFormField";
 import { SubmitButton } from "../SubmitButton";
 import { Fragment, useState, type FunctionComponent } from "react";
-import { createAppointment, getAppointmentSchema } from "@/lib";
+import { createAppointment, getAppointmentSchema, updateAppointment } from "@/lib";
 import { useRouter } from "next/navigation";
 import { DATE_STANDARD_FORMAT, Doctors, ENGLISH } from "@/constants";
 import { SelectItem } from "../ui/select";
 import Image from "next/image";
 import { FormFieldType } from ".";
+import type { Appointment } from "@/types/appwrite";
 
 const { LABEL_REASON_OF_APPOINTMENT, LABEL_DOCTOR, PLACE_HOLDER } = ENGLISH;
 const { PLACE_HOLDER_CHOOSE_DOCTOR, PLACE_HOLDER_REASON_OF_APPOINTMENT } = PLACE_HOLDER;
@@ -20,9 +21,18 @@ export interface AppointmentFormProps {
   patientId: string;
   type: "create" | "cancel" | "schedule";
   userId: string;
+  setOpen?: (open: boolean) => void;
+  appointment?: Appointment;
+  onPress: () => Promise<void>;
 }
 
-export const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({ patientId, type, userId }: AppointmentFormProps) => {
+export const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({
+  patientId,
+  type,
+  userId,
+  appointment,
+  setOpen
+}: AppointmentFormProps) => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean | undefined>(false);
 
@@ -31,15 +41,15 @@ export const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({ patie
   const form = useForm<z.infer<typeof appointmentFormValidation>>({
     resolver: zodResolver(appointmentFormValidation),
     defaultValues: {
-      primaryPhysician: "",
-      note: "",
-      schedule: new Date(),
-      reason: ""
+      primaryPhysician: appointment && appointment.primaryPhysician,
+      note: appointment ? appointment.note : "",
+      schedule: (appointment && new Date(appointment.schedule)) || new Date(),
+      reason: appointment ? appointment.reason : "",
+      cancellationReason: (appointment && appointment?.cancellationReason) || ""
     }
   });
 
   const onSubmit = async (values: z.infer<typeof appointmentFormValidation>) => {
-    console.log("values", values);
     try {
       let status: Status = "pending";
 
@@ -58,21 +68,43 @@ export const AppointmentForm: FunctionComponent<AppointmentFormProps> = ({ patie
 
       setLoading(true);
 
-      const request = {
-        userId,
-        patient: patientId,
-        primaryPhysician: values.primaryPhysician,
-        reason: values.reason!,
-        note: values.note,
-        schedule: new Date(values.schedule),
-        status
-      };
+      let request: AppointmentParams;
 
-      const response = await createAppointment(request);
+      if (type === "create" && patientId) {
+        request = {
+          type: "create",
+          userId,
+          patient: patientId,
+          primaryPhysician: values.primaryPhysician,
+          reason: values.reason!,
+          note: values.note,
+          schedule: new Date(values.schedule),
+          status
+        };
+      } else {
+        // to update data : either cancel or schedule
+        console.log("updating");
+        request = {
+          type: "update",
+          userId,
+          appointmentId: appointment?.$id!,
+          appointment: {
+            primaryPhysician: values.primaryPhysician,
+            cancellationReason: values.cancellationReason,
+            schedule: new Date(values.schedule),
+            status,
+            note: values.note
+          }
+        };
+      }
+
+      const response = type === "create" ? await createAppointment(request) : await updateAppointment(request);
 
       if (response) {
         form.reset();
-        router.push(`/patients/${userId}/new-appointment/success?appointmentId=${response.$id}`);
+        if (!setOpen) router.push(`/patients/${userId}/new-appointment/success?appointmentId=${response.$id}`);
+        setOpen && setOpen(false);
+        form.reset();
       }
     } catch (error) {
       console.log(error);

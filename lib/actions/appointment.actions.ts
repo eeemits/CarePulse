@@ -2,8 +2,9 @@
 
 import { ID, Query } from "node-appwrite";
 import { APPOINTMENT_COLLECTION_ID, DATABASE_ID, db, parseStringify } from "..";
+import { revalidatePath } from "next/cache";
 
-export const createAppointment = async (appointment: CreateAppointmentParams) => {
+export const createAppointment = async (appointment: AppointmentParams) => {
   try {
     const newAppointment = await db.createDocument(DATABASE_ID!, APPOINTMENT_COLLECTION_ID!, ID.unique(), {
       ...appointment
@@ -19,7 +20,7 @@ export const getAppointment = async (id: string) => {
   try {
     const response = await db.getDocument(DATABASE_ID!, APPOINTMENT_COLLECTION_ID!, id);
 
-    return parseStringify(response) as RestResponse<CreateAppointmentParams>;
+    return parseStringify(response) as RestResponse<AppointmentParams>;
   } catch (error) {
     throw error;
   }
@@ -55,6 +56,28 @@ export const getRecentAppointment = async () => {
     };
 
     return parseStringify(data);
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+export const updateAppointment = async (request: AppointmentParams) => {
+  try {
+    if (request.type === "update") {
+      const response = await db.updateDocument(
+        DATABASE_ID!,
+        APPOINTMENT_COLLECTION_ID!,
+        request.appointmentId,
+        request.appointment
+      );
+
+      if (!response) throw new Error("Failed to update appointment");
+
+      // TODO SMS NOTIFICATION
+
+      revalidatePath("/admin");
+      return parseStringify(response);
+    }
   } catch (error) {
     console.log("error", error);
   }

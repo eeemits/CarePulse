@@ -38,23 +38,30 @@ declare interface RegisterUserParams extends CreateUserParams {
   userId: string;
 }
 
-declare type CreateAppointmentParams = {
-  note: string | undefined;
-  patient: string;
-  primaryPhysician: string;
-  reason: string;
-  schedule: Date;
-  status: Status;
-  userId: string;
-  cancellationReason: string | null;
-};
-
-declare type UpdateAppointmentParams = {
-  appointment: Appointment;
-  appointmentId: string;
-  type: string;
-  userId: string;
-};
+declare type AppointmentParams =
+  | {
+      type: "create";
+      patient: string;
+      primaryPhysician: string;
+      reason: string;
+      schedule: Date;
+      status: Status;
+      userId: string;
+      note?: string;
+      cancellationReason?: null;
+    }
+  | {
+      type: "update";
+      appointmentId: string;
+      appointment: {
+        primaryPhysician: string;
+        cancellationReason?: string;
+        schedule: Date;
+        status: Status;
+        note?: string;
+      };
+      userId: string;
+    };
 
 declare interface RestResponse<T> {
   total: number;

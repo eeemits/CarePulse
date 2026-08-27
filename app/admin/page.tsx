@@ -1,11 +1,12 @@
 "use client";
 
+import { columns, DataTable } from "@/components/table";
 import { Loader } from "@/components/Loader";
 import { StateCard } from "@/components/StateCard";
 import { getRecentAppointment } from "@/lib";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState, type FunctionComponent } from "react";
+import React, { Fragment, useEffect, useRef, useState, type FunctionComponent } from "react";
 import { set } from "zod";
 
 const AdminPage: FunctionComponent = () => {
@@ -15,7 +16,9 @@ const AdminPage: FunctionComponent = () => {
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const appointments: StatsProps = await getRecentAppointment();
+
       stat.current = appointments;
       setLoading(false);
     })();
@@ -46,28 +49,37 @@ const AdminPage: FunctionComponent = () => {
         </section>
 
         {loading ? (
-          <Loader loading={loading} />
+          <Loader
+            loading={loading}
+            size="md"
+          />
         ) : (
-          <section className="admin-stat">
-            <StateCard
-              type="appointments"
-              icon="/assets/icons/appointments.svg"
-              label="Scheduled appointments"
-              count={stat.current!.appointments}
+          <Fragment>
+            <section className="admin-stat">
+              <StateCard
+                type="appointments"
+                icon="/assets/icons/appointments.svg"
+                label="Scheduled appointments"
+                count={stat.current!.appointments}
+              />
+              <StateCard
+                type="pending"
+                icon="/assets/icons/pending.svg"
+                label="Pending appointments"
+                count={stat.current!.pending}
+              />
+              <StateCard
+                type="cancelled"
+                icon="/assets/icons/cancelled.svg"
+                label="Cancelled appointments"
+                count={stat.current!.cancelled}
+              />
+            </section>
+            <DataTable
+              columns={columns}
+              data={stat!.current!.documents}
             />
-            <StateCard
-              type="pending"
-              icon="/assets/icons/pending.svg"
-              label="Pending appointments"
-              count={stat.current!.pending}
-            />
-            <StateCard
-              type="cancelled"
-              icon="/assets/icons/cancelled.svg"
-              label="Cancelled appointments"
-              count={stat.current!.cancelled}
-            />
-          </section>
+          </Fragment>
         )}
       </main>
     </div>
